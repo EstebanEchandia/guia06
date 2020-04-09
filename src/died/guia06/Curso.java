@@ -1,5 +1,6 @@
 package died.guia06;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,10 @@ public class Curso {
 		this.log = new Registro();
 	}
 	
+	public boolean quedaCupo() {
+		if(this.inscriptos.size() > this.cupo) return true;
+		return false;
+	}
 
 	/**
 	 * Este método, verifica si el alumno se puede inscribir y si es así lo agrega al curso,
@@ -46,7 +51,21 @@ public class Curso {
 	 * @return
 	 */
 	public Boolean inscribir(Alumno a) {
-		log.registrar(this, "inscribir ",a.toString());
+		
+		if(a.puedeRegistrarseCreditos(this.creditosRequeridos) && this.quedaCupo() && (a.materiasCursando() < 3)) {
+
+			
+		try {
+			
+			log.registrar(this, "inscribir ",a.toString());
+			
+		} catch (IOException e) {
+			System.out.println("Fallo el metodo y tiro el codigo de error: "+ e.printStackTrace());
+		}
+		
+		return true;
+		
+		}
 		return false;
 	}
 	
@@ -55,7 +74,15 @@ public class Curso {
 	 * imprime los inscriptos en orden alfabetico
 	 */
 	public void imprimirInscriptos() {
-		log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
+		try {
+			
+			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
+			
+		} catch (IOException e) {
+			
+			
+			e.printStackTrace();
+		}
 	}
 
 

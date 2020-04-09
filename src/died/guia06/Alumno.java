@@ -23,13 +23,7 @@ public class Alumno implements Comparable<Alumno> {
 	public String getNombre() {
 		return nombre;
 	}
-
-
-
-	@Override 
-	public int compare(Alumno a1, Alumno a2) {
-		return a1.getNombre().compareTo(a2.getNombre());
-	}
+	
 
 	public int creditosObtenidos() {
 		return 1;
@@ -47,6 +41,19 @@ public class Alumno implements Comparable<Alumno> {
 		if(this.nroLibreta == a2.nroLibreta) return true;
 				return false;
 	}
-	
 
+	public boolean puedeRegistrarseCreditos(int creditosRequeridos) {
+		if(this.creditosObtenidos() > creditosRequeridos) return true;
+		return false;		
+	}
+
+	public int materiasCursando() {
+		return this.cursando.size();
+	}
+	@Override
+	public int compareTo(Alumno o) {
+		return this.nombre.compareTo(o.nombre);
+	}
+	
+	
 }
