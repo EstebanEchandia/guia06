@@ -52,15 +52,18 @@ public class Curso {
 	 */
 	public Boolean inscribir(Alumno a) {
 		
-		if(a.puedeRegistrarseCreditos(this.creditosRequeridos) && this.quedaCupo() && (a.materiasCursando() < 3)) {
-
+		if(a.puedeRegistrarseCreditos(this.creditosRequeridos) && this.quedaCupo() && a.puedeRegistrarseCantMaterias()) {
+			
 			
 		try {
 			
 			log.registrar(this, "inscribir ",a.toString());
+			a.inscripcionAceptada(this);
+			
 			
 		} catch (IOException e) {
-			System.out.println("Fallo el metodo y tiro el codigo de error: "+ e.printStackTrace());
+			System.out.println("Fallo el metodo y tiro el error: "+ e);
+			e.printStackTrace();
 		}
 		
 		return true;
