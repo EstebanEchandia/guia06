@@ -20,7 +20,7 @@ public class Alumno implements Comparable<Alumno> {
 	
 	
 	
-	
+	//testeada
 	public int creditosObtenidos() {
 		int creditos = 0;
 		for(Curso a: aprobados) {
@@ -29,32 +29,30 @@ public class Alumno implements Comparable<Alumno> {
 		return creditos;
 	}
 
-	
+	//testeado
 	public void aprobar(Curso c) {
 		this.aprobados.add(c);
 		this.cursando.remove(c);
 	}
 
+	
+	//testeado
 	public void inscripcionAceptada(Curso c) {
 		this.cursando.add(c);
 	}
 	
 	
-
+	//testeada
 	public boolean puedeRegistrarseCreditos(int creditosRequeridos) {
 		if(this.creditosObtenidos() > creditosRequeridos) return true;
 		return false;		
 	}
-
-	public int materiasCursando() {
-		return this.cursando.size();
-	}
 	
+	//testeada
 	public boolean puedeRegistrarseCantMaterias() {
 		if(this.cursando.size() < 3) return true;
 		return false;
 	}
-	
 	
 	public boolean equals(Alumno a2) {
 		if(this.nroLibreta == a2.nroLibreta) return true;
@@ -62,10 +60,27 @@ public class Alumno implements Comparable<Alumno> {
 	}
 	
 	
+	//testeo?
+	public int materiasCursando() {
+		return this.cursando.size();
+	}
+
+	
+	
+	
 	@Override
 	public int compareTo(Alumno a) {
 		return this.nombre.compareTo(a.nombre);
 	}
+
+	public List<Curso> getCursando() {
+		return cursando;
+	}
+
+	public List<Curso> getAprobados() {
+		return aprobados;
+	}
+	
 	
 	
 }
