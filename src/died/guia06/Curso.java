@@ -32,6 +32,33 @@ public class Curso {
 		this.log = new Registro();
 	}
 	
+	
+	
+	
+	
+	public Curso(Integer id, String nombre, Integer cicloLectivo, Integer cupo, Integer creditos,
+			Integer creditosRequeridos) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.cicloLectivo = cicloLectivo;
+		this.cupo = cupo;
+		this.creditos = creditos;
+		this.creditosRequeridos = creditosRequeridos;
+		this.inscriptos = new ArrayList<Alumno>();
+		this.log = new Registro();
+	}
+
+
+
+
+
+	public Integer getCreditos() {
+		return creditos;
+	}
+
+
+
 	public boolean quedaCupo() {
 		if(this.inscriptos.size() > this.cupo) return true;
 		return false;
@@ -53,22 +80,22 @@ public class Curso {
 	public Boolean inscribir(Alumno a) {
 		
 		if(a.puedeRegistrarseCreditos(this.creditosRequeridos) && this.quedaCupo() && a.puedeRegistrarseCantMaterias()) {
+			try {
+				log.registrar(this, "inscribir ",a.toString());
+				a.inscripcionAceptada(this);
+				this.inscriptos.add(a);
 			
-			
-		try {
-			
-			log.registrar(this, "inscribir ",a.toString());
-			a.inscripcionAceptada(this);
-			
-			
-		} catch (IOException e) {
-			System.out.println("Fallo el metodo y tiro el error: "+ e);
-			e.printStackTrace();
+			} catch (IOException e) {
+				
+				System.out.println("Fallo el metodo y tiro el error: "+ e);
+				e.printStackTrace();
+				return false;
+			}
+	
+			return true;
+		
 		}
 		
-		return true;
-		
-		}
 		return false;
 	}
 	
