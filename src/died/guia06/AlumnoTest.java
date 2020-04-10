@@ -98,7 +98,7 @@ public class AlumnoTest{
 		//creditos hasta aca son 14
 		
 		boolean puedeRegistrarse = a1.puedeRegistrarseCreditos(20);
-		assertTrue(puedeRegistrarse);
+		assertFalse(puedeRegistrarse);
 	}
 	
 	@Test
