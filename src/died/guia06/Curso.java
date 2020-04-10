@@ -2,6 +2,9 @@ package died.guia06;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import died.guia06.util.Registro;
@@ -14,7 +17,7 @@ import died.guia06.util.Registro;
  * @author marti
  *
  */
-public class Curso {
+public class Curso implements ComparatorAlumno{
 
 	private Integer id;
 	private String nombre;
@@ -106,7 +109,22 @@ public class Curso {
 	public void imprimirInscriptos() {
 		try {
 			
+			
 			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
+			
+			Collections.sort(inscriptos, new Comparator<Alumno>() {
+				@Override
+				public int compare(Alumno a1, Alumno a2) {
+					return a1.getNombre().compareTo(a2.getNombre());
+				}
+				
+			});
+			int i = 0;
+			for(Alumno a: inscriptos) {
+				
+				System.out.println(i+"°)"+inscriptos.get(i));
+				i++;
+			}
 			
 		} catch (IOException e) {
 			

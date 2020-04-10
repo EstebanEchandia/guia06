@@ -1,24 +1,147 @@
 package died.guia06;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-class AlumnoTest {
+public class AlumnoTest{
+	
 
+	public Alumno a1;
+	public Curso died;
+	public Curso gestion;
+	public Curso economia;
+	public Curso comunicaciones;
+
+	@Before
+	public void setUp() throws Exception {
+		
+		a1 = new Alumno("Pedro",2243);
+		died = new Curso(123, "DIED",2020, 100, 6, 20);
+		gestion = new Curso(124, "Gestion de Datos",2020, 60, 8, 22);
+		comunicaciones = new Curso(126, "Comunicaciones",2020, 30, 10, 10);
+		economia = new Curso(128, "Economia",2020, 40, 4, 42);
+
+		}
+		
 	@Test
-	void testCreditosObtenidos() {
-		fail("Not yet implemented");
+	public void testCreditosObtenidos() {
+
+		gestion.inscribir(a1);
+		died.inscribir(a1);
+		a1.aprobar(died);
+		a1.aprobar(gestion);
+		
+		int creditosObt = a1.creditosObtenidos();
+		assertEquals(14,creditosObt);
+	}
+	
+	
+	@Test
+	public void testAprobar() {
+		died.inscribir(a1);
+		a1.aprobar(died);
+		boolean aproboDied = a1.getAprobados().contains(died);
+		assertTrue(aproboDied);	
+	}
+	
+	@Test
+	public void testAprobarEliminarCursado() {
+		gestion.inscribir(a1);
+		a1.aprobar(gestion);
+		boolean cursaGestion = a1.getCursando().contains(gestion);
+		assertFalse(cursaGestion);	
 	}
 
+	
 	@Test
-	void testAprobar() {
-		fail("Not yet implemented");
+	public void testInscripcionAceptada() {
+		a1.inscripcionAceptada(died);
+		boolean estaCursandoDied = a1.getCursando().contains(died);
+		assertTrue(estaCursandoDied);
 	}
-
+	
 	@Test
-	void testInscripcionAceptada() {
-		fail("Not yet implemented");
+	public void testInscripcionNoAceptada() {
+		
+		died.inscribir(a1);
+		a1.aprobar(died);
+		
+		boolean estaCursandoDied = a1.getCursando().contains(died);
+		assertFalse(estaCursandoDied);
 	}
+	
+	@Test
+	public void testPuedeRegistrarCreditos() {
+		died.inscribir(a1);
+		gestion.inscribir(a1);
+		
+		a1.aprobar(died);
+		a1.aprobar(gestion);
+		//creditos hasta aca son 14
+		
+		boolean puedeRegistrarse = a1.puedeRegistrarseCreditos(13);
+		assertTrue(puedeRegistrarse);
+	}
+	
+	@Test
+	public void testNoPuedeRegistrarCreditos() {
+		
+		a1.inscripcionAceptada(died);
+		a1.inscripcionAceptada(gestion);
+		
+		a1.aprobar(died);
+		a1.aprobar(gestion);
+		
+		//creditos hasta aca son 14
+		
+		boolean puedeRegistrarse = a1.puedeRegistrarseCreditos(20);
+		assertFalse(puedeRegistrarse);
+	}
+	
+	@Test
+	public void testPuedeRegistrarCantidadMaterias() {
+		died.inscribir(a1);
+		gestion.inscribir(a1);
+		
+		boolean puedeInscribirse = a1.puedeRegistrarseCantMaterias();
+		assertTrue(puedeInscribirse);
+	}
+	
+	@Test
+	public void testNoPuedeRegistrarCantidadMaterias() {
+		
+		a1.inscripcionAceptada(died);
+		a1.inscripcionAceptada(gestion);
+		a1.inscripcionAceptada(comunicaciones);
+		a1.inscripcionAceptada(economia);
+		
+		
+		boolean puedeInscribirse = a1.puedeRegistrarseCantMaterias();
+		assertFalse(puedeInscribirse);
+	}
+	
+	@Test 
+	public void testEquals() {
+		
+		Alumno a2 = new Alumno("Marcos",2243);
+		boolean iguales = a1.equals(a2);
+		assertTrue(iguales);
+	}
+	
+	@Test 
+	public void testNoEquals() {
+		Alumno a3 = new Alumno("Marcos",2283);
+		Alumno a2 = new Alumno("Pedro",2283);
+		boolean iguales = a2.equals(a3);
+		assertFalse(iguales);
+	}
+	
+	
 
 }
+
+
