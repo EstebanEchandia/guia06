@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.List;
 
 import died.guia06.util.Registro;
@@ -17,7 +17,7 @@ import died.guia06.util.Registro;
  * @author marti
  *
  */
-public class Curso implements ComparatorAlumno{
+public class Curso {
 
 	private Integer id;
 	private String nombre;
@@ -35,37 +35,22 @@ public class Curso implements ComparatorAlumno{
 		this.log = new Registro();
 	}
 	
-	
-	
-	
-	
-	public Curso(Integer id, String nombre, Integer cicloLectivo, Integer cupo, Integer creditos,
-			Integer creditosRequeridos) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.cicloLectivo = cicloLectivo;
-		this.cupo = cupo;
-		this.creditos = creditos;
-		this.creditosRequeridos = creditosRequeridos;
+	public Curso(Integer id,String nombre,Integer cicloLec,Integer cupo, 
+			Integer cred,Integer credReq) {
+		this.id=id;
+		this.nombre=nombre;
+		this.cicloLectivo=cicloLec;
+		this.cupo=cupo;
+		this.creditos=cred;
+		this.creditosRequeridos=credReq;
 		this.inscriptos = new ArrayList<Alumno>();
 		this.log = new Registro();
 	}
-
-
-
-
 
 	public Integer getCreditos() {
 		return creditos;
 	}
 
-
-
-	public boolean quedaCupo() {
-		if(this.inscriptos.size() > this.cupo) return true;
-		return false;
-	}
 
 	/**
 	 * Este método, verifica si el alumno se puede inscribir y si es así lo agrega al curso,
@@ -80,50 +65,57 @@ public class Curso implements ComparatorAlumno{
 	 * @param a
 	 * @return
 	 */
-	public Boolean inscribir(Alumno a) {
-		
-		if(a.puedeRegistrarseCreditos(this.creditosRequeridos) && this.quedaCupo() && a.puedeRegistrarseCantMaterias()) {
-			try {
-				log.registrar(this, "inscribir ",a.toString());
-				a.inscripcionAceptada(this);
-				this.inscriptos.add(a);
-			
-			} catch (IOException e) {
-				
-				System.out.println("Fallo el metodo y tiro el error: "+ e);
-				e.printStackTrace();
-				return false;
-			}
 	
-			return true;
+	
+	
+	
+	public Boolean inscribir(Alumno a){
 		
-		}
+		try {
+			if(a.puedeRegistrarseCreditos(creditosRequeridos) && (inscriptos.size() < this.cupo) && 
+					a.puedeRegistrarseCantMaterias()) {
+				
+				log.registrar(this, "inscribir ",a.toString());
+				inscriptos.add(a);
+				a.inscripcionAceptada(this);
+				
+				return true;
+			}
+		
+		} catch (IOException e) {
+			System.out.println("error registrando, vuelva a intentar");
+			return false;
+		} 
 		
 		return false;
 	}
 	
 	
 	/**
-	 * imprime los inscriptos en orden alfabetico
+	 * imprime los inscriptos en el orden pasado como argumento, Alfabeticamente o nroLibreta.
 	 */
-	public void imprimirInscriptos() {
+	public void imprimirInscriptos(Orden orden) {
 		try {
-			
 			
 			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
 			
-			Collections.sort(inscriptos, new Comparator<Alumno>() {
-				@Override
-				public int compare(Alumno a1, Alumno a2) {
-					return a1.getNombre().compareTo(a2.getNombre());
-				}
+			switch(orden) {
+			case ALFABETICAMENTE:
+				Collections.sort(inscriptos);
 				
-			});
-			int i = 0;
+				break;
+				
+			case LIBRETA:
+				Collections.sort(inscriptos, new ComparatorAlumnoNroLibreta());
+				
+				break;
+			}
+			
+			int j=0;
 			for(Alumno a: inscriptos) {
+				System.out.println(j+") "+a.toString());
+				j++;
 				
-				System.out.println(i+"�)"+inscriptos.get(i));
-				i++;
 			}
 			
 		} catch (IOException e) {
@@ -131,6 +123,14 @@ public class Curso implements ComparatorAlumno{
 			
 			e.printStackTrace();
 		}
+	}
+
+
+
+
+
+	public List<Alumno> getInscriptos() {
+		return inscriptos;
 	}
 
 
