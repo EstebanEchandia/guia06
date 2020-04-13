@@ -29,7 +29,7 @@ public class Alumno implements Comparable<Alumno> {
 		this.nroLibreta = nroLibreta;
 		this.cursando = new ArrayList<Curso>();
 		this.aprobados = new ArrayList<Curso>();
-		
+		this.creditos=0;
 	}
 	
 	
@@ -58,7 +58,7 @@ public class Alumno implements Comparable<Alumno> {
 	
 	//testeada
 	public boolean puedeRegistrarseCreditos(int creditosRequeridos) {
-		if(this.creditosObtenidos() > creditosRequeridos) return true;
+		if(this.creditosObtenidos() >= creditosRequeridos) return true;
 		return false;		
 	}
 	

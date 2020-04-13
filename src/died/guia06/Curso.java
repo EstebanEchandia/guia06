@@ -102,12 +102,10 @@ public class Curso {
 			switch(orden) {
 			case ALFABETICAMENTE:
 				Collections.sort(inscriptos);
-				
 				break;
 				
 			case LIBRETA:
 				Collections.sort(inscriptos, new ComparatorAlumnoNroLibreta());
-				
 				break;
 			}
 			
@@ -120,7 +118,7 @@ public class Curso {
 			
 		} catch (IOException e) {
 			
-			
+			System.out.println("ERROR IMPRIMIENDO");
 			e.printStackTrace();
 		}
 	}
