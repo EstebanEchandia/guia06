@@ -70,6 +70,16 @@ public class App {
 		Curso algebra = new Curso(3,"Algebra",2020,30,3,6);
 		Curso arq = new Curso(3,"arq",2020,30,3,0);
 		
+		System.out.println("Inscribiendo con el metodo de capturar excepciones");
+		
+		try {
+			arq.inscribirConExcepciones(a6);
+			System.out.println("Inscribio al alumno\n");
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 				
 		System.out.println("tratando de inscribir sin tener los creditos, capturando excepciones");
 		try {
@@ -92,7 +102,7 @@ public class App {
 			fisica.inscribirConExcepciones(a6);
 			died.inscribirConExcepciones(a6);
 			algebra.inscribirConExcepciones(a6);
-			arq.inscribirConExcepciones(a6);
+		
 			
 		}
 		catch(Exception e) {
