@@ -13,12 +13,12 @@ public class App {
 		Alumno a3 = new Alumno("Rodrigo",2031);
 		Alumno a4 = new Alumno("Lucio",2035);
 		
+		
 		//	new Curso(id, nombre, cicloLec, cupo, cred, credReq);
 	
 		Curso discreta = new Curso(2, "MatDiscreta", 2019, 30, 20, 0);
 		Curso sintaxis = new Curso(150, "Sintaxis", 2020, 30, 2, 10);
 		Curso died = new Curso(30, "Died", 2020, 20, 6, 10);
-		Curso comunicaciones = new Curso(20, "Comunicaciones", 2020, 30, 6, 12);
 		Curso superior = new Curso(88, "Superior", 2020, 20, 6, 14);
 		
 		boolean i1 = discreta.inscribir(a1);
@@ -54,5 +54,52 @@ public class App {
 		
 		System.out.println("Si aprobamos discreta en a1");
 		a1.aprobar(discreta);
+		System.out.println("Intentando nuevamente, con cupo ya liberado "+sintaxis.inscribir(a1));
+		System.out.println();
+		
+		
+		
+		//Inscribir Con Excepciones
+		
+		Alumno a5 = new Alumno("Roberto", 2890, 5);
+		Alumno a6 = new Alumno("Peña", 2850, 30);
+		
+		
+		
+		Curso fisica = new Curso(2,"Fisica",2020,30,3,4);
+		Curso algebra = new Curso(3,"Algebra",2020,30,3,6);
+		Curso arq = new Curso(3,"arq",2020,30,3,0);
+		
+				
+		System.out.println("tratando de inscribir sin tener los creditos, capturando excepciones");
+		try {
+			algebra.inscribirConExcepciones(a5);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage()+"\n");
+		}
+		
+		System.out.println("Tratando de inscribir sin tener cupo, capturando excepciones");
+		try {
+			superior.inscribirConExcepciones(a5);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage()+"\n");
+		}
+		
+		System.out.println("Tratando de inscribir con Cantidad de Materias superada, capturando excepciones");
+		try {
+			fisica.inscribirConExcepciones(a6);
+			died.inscribirConExcepciones(a6);
+			algebra.inscribirConExcepciones(a6);
+			arq.inscribirConExcepciones(a6);
+			
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage()+"\n");
+		}
+		
+		
+		
 	}
 }
