@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import died.guia06.util.CantMateriasCursandoExcepcion;
+
 class CursoTest {
 	
 	//El before me tiraba null pointer exception :/
@@ -94,5 +96,63 @@ class CursoTest {
 		
 	}
 	
+	@Test
+	public void inscribirConExcepcionesFunciona() {
+		
+		boolean inscribio = false;;
+		try {
+			sintaxis.inscribirConExcepciones(a1);
+			inscribio = true;
+		}
+		catch(Exception ee) {
+			inscribio = false;
+		}
+		assertTrue(inscribio);
+	}
+	
+	@Test
+	public void inscribirConExcepcionesFallaCreditos() {
+		
+		boolean inscribio = false;
+		try {
+			sintaxis.inscribirConExcepciones(a2);
+			inscribio = true;
+		}
+		catch(Exception NroCreditosReqExcepcion) {
+		}
+		
+		assertFalse(inscribio);
+	}
+	
+	@Test
+	public void inscribirConExcepcionesFallaCupo() {
+		boolean inscribio = false;
+		try {
+			sintaxis.inscribirConExcepciones(a1);
+			sintaxis.inscribirConExcepciones(a3);
+			sintaxis.inscribirConExcepciones(a4);
+			inscribio = true;
+		}
+		catch(Exception CupoLlenoExcepcion) {
+		}
+		assertFalse(inscribio);
+	}
+	
+	@Test
+	public void inscribirConExcepcionesFallaCantMaterias() {
+		boolean inscribio = false;
+		
+		try {
+			sintaxis.inscribirConExcepciones(a1);
+			died.inscribirConExcepciones(a1);
+			comunicaciones.inscribirConExcepciones(a1);
+			superior.inscribirConExcepciones(a1);
+			inscribio = true;
+		}
+		catch(Exception CantMateriasCursandoExcepcion){
+			
+		}
+		assertFalse(inscribio);
+	}
 
 }

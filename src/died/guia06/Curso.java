@@ -95,7 +95,7 @@ public class Curso {
 	}
 	
 	
-	public void imprimirConExcepciones(Alumno a) throws CantMateriasCursandoExcepcion, CupoLlenoExcepcion,NroCreditosReqExcepcion, RegistroAuditoriaExcepcion{
+	public void inscribirConExcepciones(Alumno a) throws CantMateriasCursandoExcepcion, CupoLlenoExcepcion,NroCreditosReqExcepcion, RegistroAuditoriaExcepcion{
 		if(!(a.puedeRegistrarseCreditos(creditosRequeridos))) throw new NroCreditosReqExcepcion();
 		if(inscriptos.size() >= this.cupo) throw new CupoLlenoExcepcion();
 		if(!(a.puedeRegistrarseCantMaterias())) throw new CantMateriasCursandoExcepcion();
