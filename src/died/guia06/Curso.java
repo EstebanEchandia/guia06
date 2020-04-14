@@ -7,7 +7,11 @@ import java.util.Collections;
 
 import java.util.List;
 
+import died.guia06.util.CantMateriasCursandoExcepcion;
+import died.guia06.util.CupoLlenoExcepcion;
+import died.guia06.util.NroCreditosReqExcepcion;
 import died.guia06.util.Registro;
+import died.guia06.util.RegistroAuditoriaExcepcion;
 
 /**
  * Clase que representa un curso. Un curso se identifica por su ID y por su nombre y ciclo lectivo.
@@ -90,6 +94,23 @@ public class Curso {
 		return false;
 	}
 	
+	
+	public void imprimirConExcepciones(Alumno a) throws CantMateriasCursandoExcepcion, CupoLlenoExcepcion,NroCreditosReqExcepcion, RegistroAuditoriaExcepcion{
+		if(!(a.puedeRegistrarseCreditos(creditosRequeridos))) throw new NroCreditosReqExcepcion();
+		if(inscriptos.size() >= this.cupo) throw new CupoLlenoExcepcion();
+		if(!(a.puedeRegistrarseCantMaterias())) throw new CantMateriasCursandoExcepcion();
+		try {
+			log.registrar(this, "inscribir ",a.toString());
+			inscriptos.add(a);
+			a.inscripcionAceptada(this);
+			
+			
+		}
+		catch(IOException Excep) {
+			throw new RegistroAuditoriaExcepcion();
+		}
+		
+	}
 	
 	/**
 	 * imprime los inscriptos en el orden pasado como argumento, Alfabeticamente o nroLibreta.
